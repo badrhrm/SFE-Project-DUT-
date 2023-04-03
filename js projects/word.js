@@ -6,6 +6,8 @@
 
 var prompt = require('prompt-sync')();
 
+
+
 const getPoints = () => {
     while(true){
         const points = prompt("How many points do you have : ");
@@ -45,22 +47,22 @@ function getNumberOfletters(name){
 }
 
 function randomize(name){  
-    const nameCopy = Array.from(name); //from string to array
+    const nameArray = Array.from(name); //from string to array
     console.log("name as an array : " );
-    console.log(nameCopy );
-    console.log("array length : "+nameCopy.length);
-    const counter = nameCopy.length;
+    console.log(nameArray );
+    console.log("array length : "+nameArray.length);
+    const counter = nameArray.length;
     const randomizedName = [];
     for(let i=0; i< counter; i++){
-        const randomIndex = Math.floor(Math.random() * nameCopy.length);
-        const selectedLetter = nameCopy[randomIndex];
+        const randomIndex = Math.floor(Math.random() * nameArray.length);
+        const selectedLetter = nameArray[randomIndex];
         randomizedName.push(selectedLetter);
-        nameCopy.splice(randomIndex, 1);
+        nameArray.splice(randomIndex, 1);
     }
     console.log("name at end :");
     console.log(name);
-    console.log("nameCopy at end :");
-    console.log(nameCopy);
+    console.log("nameArray at end :");
+    console.log(nameArray);
     console.log("randomizedName at end:");
     console.log(randomizedName);
     return randomizedName;
@@ -83,9 +85,30 @@ function play(randomizedName) {
     console.log(reRandomizedName);
     return reRandomizedName;
 }
+function checkWin(name,reRandomizedName,numberOfLetters){
+    const nameArray = Array.from(name);
+    let counter = 0;
+    for (let i = 0 ; i < nameArray.length ; i++) {
+        if (nameArray[i] === reRandomizedName[i]){
+            counter++;
+        }
+        
+    }
+    if (counter > 0) {
+        console.log("u won the guess with " + numberOfLetters + " that are correct!");
+    }else {
+        console.log("u lost the guess ");
+    }
+}
 
 getPoints();
 const name =getName();
-getNumberOfletters(name);
+const numberOfletters = getNumberOfletters(name);
 const randomizedName = randomize(name);
-play(randomizedName);
+const reRandomizedName = play(randomizedName);
+checkWin(name,reRandomizedName,numberOfletters);
+
+
+//still need to check for 0 letters in checkwin function 
+// i must add points mutiplayer that depends on number of letters 
+// maybe at the end also the positions that are guessed to be correct insatead of just the number of letters
