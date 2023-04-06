@@ -3,7 +3,10 @@ const getAllTasks = async (req, res) => {
   //res.send("all items ");
   try {
     const tasks = await Task.find({});
+    //we can use various ones for other functionalities depends on what ur front ends require:
     res.status(200).json({ tasks }); //~json({tasks:tasks})
+    //res.status(200).json({ tasks, amount: tasks.length }); //speciy amount shown
+    //res.status(200).json({ status: "success", data: {tasks, nbHits: tasks.length} }); //mbHits: number of hits
   } catch (error) {
     res.status(500).json({ msg: error });
   }
