@@ -2,31 +2,31 @@
   {
     "name": "accent chair",
     "price": 25,
-    "company": "marcos",
+    "company": "ikea",
     "rating": 4
   },
   {
     "name": "albany sectional",
     "price": 109,
-    "company": "liddy",
+    "company": "ikea",
     "rating": 5
   },
   {
     "name": "albany table",
     "price": 309,
-    "company": "liddy",
+    "company": "marjan",
     "rating": 4.9
   },
   {
     "name": "armchair",
     "price": 125,
-    "company": "marcos",
+    "company": "jumia",
     "rating": 4.8
   },
   {
     "name": "bar stool",
     "price": 40,
-    "company": "liddy",
+    "company": "marjan",
     "rating": 4.6
   },
   {
@@ -44,7 +44,7 @@
     "name": "entertainment center",
     "price": 59,
     "featured": true,
-    "company": "caressa"
+    "company": "jumia"
   },
   {
     "name": "high-back bench",
@@ -56,18 +56,18 @@
   {
     "name": "leather sofa",
     "price": 99,
-    "company": "caressa"
+    "company": "marjan"
   },
   {
     "name": "modern bookshelf",
     "price": 31,
     "featured": true,
-    "company": "caressa"
+    "company": "marjan"
   },
   {
     "name": "modern poster",
     "price": 30,
-    "company": "liddy"
+    "company": "jumia"
   },
   {
     "name": "shelf",
@@ -77,29 +77,29 @@
   {
     "name": "simple chair",
     "price": 109,
-    "company": "liddy"
+    "company": "marjan"
   },
   {
     "name": "sofa set",
     "price": 129,
-    "company": "marcos"
+    "company": "ikea"
   },
   {
     "name": "suede armchair",
     "price": 15,
-    "company": "caressa"
+    "company": "jumia"
   },
   {
     "name": "utopia sofa",
     "price": 79,
     "featured": true,
-    "company": "liddy"
+    "company": "marjan"
   },
   {
     "name": "vase table",
     "price": 120,
     "featured": true,
-    "company": "marcos"
+    "company": "jumia"
   },
   {
     "name": "wooden bed",
@@ -120,12 +120,12 @@
     "name": "wooden table",
     "price": 23,
     "featured": true,
-    "company": "caressa"
+    "company": "marjan"
   },
   {
     "name": "a first wooden table",
     "price": 23,
     "featured": true,
-    "company": "caressa"
+    "company": "jumia"
   }
 ]
