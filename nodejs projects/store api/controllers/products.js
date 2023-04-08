@@ -19,7 +19,7 @@ const getAllProductsStatic = async (req, res) => {
   //res.status(200).json({ msg: "products testing route" });
 };
 const getAllProducts = async (req, res) => {
-  const { featured, company, name, sort } = req.query;
+  const { featured, company, name, sort, select } = req.query;
   const queryObject = {};
   if (featured) {
     queryObject.featured = featured === "true" ? true : false;
@@ -45,6 +45,18 @@ const getAllProducts = async (req, res) => {
     //incase the user did not enter a value for sort, then its sorted by date of creation
     result = result.sort("createdAt");
   }
+  if (select) {
+    const selectList = select.split(",").join(" ");
+    result = result.select(selectList);
+  }
+  //pagination
+  //here i did not destruct the req.query to get page + limit
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  result = result.skip(skip).limit(limit);
+
   const products = await result;
   res.status(200).json({ products, amount: products.length });
   //res.status(200).json({ msg: "products route" });
