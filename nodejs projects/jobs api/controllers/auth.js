@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
-//const {BadRequestError} = require("../errors");
+const { BadRequestError, UnauthenticatedError } = require("../errors");
 
 const register = async (req, res) => {
   // if not using mongo validator (required :true) then i must add this + import Error class:
@@ -18,20 +18,23 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
 
-  //not needed since we have mongo validation for email and password
+  //not needed since we have mongo validation for email and password but we in postman we get an empty err so we added this so we can use error class to add context to our err returned in postman
   if (!email || !password) {
     throw new BadRequestError("Please provide email and password");
   }
 
+  // checking if user exists
   const user = await User.findOne({ email });
   if (!user) {
     throw new UnauthenticatedError("Invalid Credentials");
   }
+
+  // compare password
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
     throw new UnauthenticatedError("Invalid Credentials");
   }
-  // compare password
+
   const token = user.createJWT();
   res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
 };

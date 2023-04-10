@@ -38,8 +38,8 @@ UserSchema.methods.createJWT = function () {
   //this can be done inside register controller
   return jwt.sign(
     { userId: this._id, name: this.name },
-    process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_LIFETIME }
+    process.env.JWT_SECRET, //"jwtsecret",
+    { expiresIn: process.env.JWT_LIFETIME } // { expiresIn: "30d" }
   );
 };
 
