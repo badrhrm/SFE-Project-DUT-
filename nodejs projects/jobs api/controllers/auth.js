@@ -10,12 +10,30 @@ const register = async (req, res) => {
   // }
 
   const user = await User.create({ ...req.body });
-  res.status(StatusCodes.CREATED).json({ user }); //201
+  const token = user.createJWT();
+  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token }); //here we can just send the token but we wanted to also send the name so we can displayed it like "hello name" //StatusCodes.CREATED = 201
   //res.send("register use");
 };
 
 const login = async (req, res) => {
-  res.send("login use");
+  const { email, password } = req.body;
+
+  //not needed since we have mongo validation for email and password
+  if (!email || !password) {
+    throw new BadRequestError("Please provide email and password");
+  }
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new UnauthenticatedError("Invalid Credentials");
+  }
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) {
+    throw new UnauthenticatedError("Invalid Credentials");
+  }
+  // compare password
+  const token = user.createJWT();
+  res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
 };
 
 module.exports = {
