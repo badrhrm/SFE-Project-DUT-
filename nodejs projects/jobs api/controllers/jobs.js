@@ -9,8 +9,23 @@ const getAllJobs = async (req, res) => {
   //res.send("all jobs");
 };
 
+//jobs accessed from params obj (job id) - user located in user obj that we get from middleware
+//since in auth middleware, we already passed name to req.user (tho we did need to do so), i destructured it here too by just to test how things work and see where this userId comes from compared to the jobId that comes from req.params
 const getJob = async (req, res) => {
-  res.send("get a  job");
+  const {
+    user: { userId /*name*/ },
+    params: { id: jobId },
+  } = req;
+
+  const job = await Job.findOne({
+    _id: jobId,
+    createdBy: userId,
+  });
+  if (!job) {
+    throw new NotFoundError(`No job with id ${jobId}`);
+  }
+  res.status(StatusCodes.OK).json({ job /*name*/ });
+  //res.send("get a  job");
 };
 
 const createJob = async (req, res) => {
