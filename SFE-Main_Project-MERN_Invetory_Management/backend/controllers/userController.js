@@ -127,12 +127,12 @@ const logout = asyncHandler(async (req, res) => {
   return res.status(200).json({ message: "Successfully Logged Out" });
 });
 
+// Get User Data
 const getUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   // console.log(user);
-
   if (user) {
-    res.json({
+    res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
