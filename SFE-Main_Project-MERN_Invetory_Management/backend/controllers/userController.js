@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Token = require("../models/tokenModel");
 
 // Generate token
 const generateToken = (id) => {
@@ -146,4 +147,60 @@ const getUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, loginUser, logout, getUser };
+// Check if a user is logged in (from HTTP only cookie)
+const loginStatus = asyncHandler(async (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.json(false);
+  }
+  const verified = jwt.verify(token, process.env.JWT_SECRET);
+  if (!verified) {
+    return res.send(false);
+  }
+  return res.json(true);
+});
+
+// Update User
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.email = user.email;
+    user.name = req.body.name || user.name; // if user did not change name then we use old name from DB
+    user.phone = req.body.phone || user.phone;
+    user.bio = req.body.bio || user.bio;
+    user.photo = req.body.photo || user.photo;
+    // if (req.body.password) {
+    //   user.password = req.body.password;
+    // }
+
+    const updatedUser = await user.save(); //updating new info to DB
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      photo: updatedUser.photo,
+      phone: updatedUser.phone,
+      bio: updatedUser.bio,
+      token: generateToken(updatedUser._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+});
+
+// Change Password
+const changePassword = asyncHandler(async (req, res) => {});
+
+module.exports = {
+  registerUser,
+  loginUser,
+  logout,
+  getUser,
+  loginStatus,
+  updateUser,
+  changePassword,
+  forgotPassword,
+};
