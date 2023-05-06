@@ -27,6 +27,9 @@ const sendEmail = async (subject, message, send_to, sent_from, reply_to) => {
   // Send email
   transporter.sendMail(options, function (err, info) {
     if (err) {
+      console.log(
+        "if error says: 'queryA ETIMEOUT ...' then probably ur @IP or ISP is blocked "
+      );
       console.log(err);
     } else {
       console.log(info);
