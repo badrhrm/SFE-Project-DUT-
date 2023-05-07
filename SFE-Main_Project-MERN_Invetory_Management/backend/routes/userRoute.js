@@ -11,15 +11,15 @@ const {
   forgotPassword,
   resetPassword,
 } = require("../controllers/userController");
-const authorization = require("../middleware/authMiddleware");
+const authentication = require("../middleware/authMiddleware");
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/logout", logout);
-router.get("/getuser", authorization, getUser);
+router.get("/getuser", authentication, getUser);
 router.get("/loggedin", loginStatus);
-router.patch("/updateuser", authorization, updateUser);
-router.patch("/changepassword", authorization, changePassword);
+router.patch("/updateuser", authentication, updateUser);
+router.patch("/changepassword", authentication, changePassword);
 router.post("/forgotpassword", forgotPassword);
 router.put("/resetpassword/:resetToken", resetPassword);
 
